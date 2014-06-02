@@ -103,9 +103,7 @@ function getImport(scope, opts, rule) {
         data: contents
     });
 
-    console.log(css);
-
-    var styles = parse(contents, {
+    var styles = parse(css, {
             position: true,
             source: path.relative(opts.root, file)
         }).stylesheet;

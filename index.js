@@ -1,7 +1,8 @@
 var resolve = require('resolve'),
     path = require('path'),
     parse = require('css-parse'),
-    fs = require('fs');
+    fs = require('fs'),
+    sass = require('node-sass');
 
 var ABS_URL = /^url\(|:\/\//,
     QUOTED = /^['"]|['"]$/g;
@@ -96,6 +97,13 @@ function getImport(scope, opts, rule) {
     if (opts.prefilter) {
         contents = opts.prefilter(contents, file);
     }
+
+    
+    var css = sass.renderSync({
+        data: contents
+    });
+
+    console.log(css);
 
     var styles = parse(contents, {
             position: true,

@@ -29,7 +29,8 @@
     "node-sass": "^0.8.1"
   },
   "dependencies": {
-    "resolve": "~0.6.1",
-    "css-parse": "~1.7.0"
+    "css-parse": "~1.7.0",
+    "node-sass": "^0.8.6",
+    "resolve": "~0.6.1"
   }
 }

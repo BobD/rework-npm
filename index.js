@@ -31,7 +31,9 @@ function isNpmImport(path) {
 function resolveImports(scope, opts, style) {
     var output = [];
     style.rules.forEach(function(rule) {
-        if (rule.type === 'import') {
+        if (rule.type === 'import' && rule.import.indexOf('_module') == 0) {
+            // '_module '.length
+            rule.import = rule.import.slice(8);
             var imported = getImport(scope, opts, rule);
             output = output.concat(imported);
         } else {
@@ -52,6 +54,7 @@ function resolveImport(opts, rule) {
     var name = rule.import.replace(QUOTED, ''),
         shimPath = opts.shim ? opts.shim[name] : null,
         alias = opts.alias ? opts.alias[name] : null;
+
     if (!isNpmImport(name)) {
         return null;
     }
@@ -62,11 +65,12 @@ function resolveImport(opts, rule) {
 
     var options = {
         basedir: opts.dir,
-        extensions: ['.css'],
+        extensions: ['.css', '.scss'],
         packageFilter: processPackage(shimPath)
     };
 
     var file = resolve.sync(name, options);
+
     return path.normalize(file);
 }
 
